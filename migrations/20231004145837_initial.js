@@ -9,6 +9,7 @@ exports.up = function (knex) {
       table.string("name").notNullable();
       table.string("email").notNullable().unique();
       table.string("password").notNullable();
+      table.string("contact").notNullable(); // contact added
       table.specificType("groups", "json[]");
       table.timestamps(true, true);
     }),

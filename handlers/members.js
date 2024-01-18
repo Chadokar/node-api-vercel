@@ -53,11 +53,16 @@ async function updateScope(req, res) {
 
 async function deleteMember(req, res) {
   const groupId = req.params.groupId;
-  const memberId = req.body.memberId;
+  const memberId = req.params.memberId;
+  console.log("groupId : ", groupId + 1);
 
-  const member = await db("users").select().where({ id: memberId });
-  const groups = member?.groups.filter((group) => group.groupId !== groupId);
-  if (Array.isArray(groups)) await db("users").where({ id }).update({ groups });
+  if (typeof groupId == "string") console.log("it is a string");
+  else console.log("it is not a string");
+
+  const member = await db("users").select().where({ id: memberId }).first();
+  const groups = member?.groups.filter((group) => group.groupId !== +groupId);
+  if (Array.isArray(groups))
+    await db("users").where({ id: memberId }).update({ groups });
 
   const response = deleteMemberCommet(groupId, memberId);
   return res.json({ response });

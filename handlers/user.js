@@ -26,6 +26,7 @@ async function createUser(req, res) {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
+      contact: req.body.contact,
       groups: [{}],
     };
     await db("users").insert(userdata);
@@ -33,7 +34,7 @@ async function createUser(req, res) {
       .select()
       .where({ email: req.body.email })
       .first();
-    console.log("user : ", user);
+    // console.log("user : ", user);
     const token = createTokens(user);
     createCometuser(user);
     // console.log("data: ", comdata);

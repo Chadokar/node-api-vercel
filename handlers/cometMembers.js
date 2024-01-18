@@ -74,11 +74,7 @@ const updateScopeCommet = (groupId, data) => {
 
 const deleteMemberCommet = (groupId, memberId) => {
   const url =
-    process.env.COMETCHAT_URL +
-    "groups/" +
-    groupId +
-    "/members/" +
-    data.memberId;
+    process.env.COMETCHAT_URL + "groups/" + groupId + "/members/" + memberId;
 
   const options = {
     method: "DELETE",

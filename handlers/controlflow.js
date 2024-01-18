@@ -5,11 +5,14 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 async function authenticate(req, res, next) {
-  console.log("header: ", req.headers);
+  // console.log("header: ", req.headers);
   let token = req?.headers?.authorization?.split(" ")[1];
 
+  console.log("auth: ", req?.headers?.authorization);
+
   // console.log("token: ", token);
-  if (!token) res.status(401).json({ error: "Invalid token" });
+  if (!token) return res.status(401).json({ error: "Invalid token" });
+  console.log("token: ", token);
   token = token.substring(1, token.length - 1);
   console.log("token2: ", token);
   var today = new Date();
@@ -25,6 +28,7 @@ async function authenticate(req, res, next) {
       const decoded = jwt.verify(token, process.env.JWT_KEY);
       console.log("decoded: ", decoded);
       req.user = await db("users").select().where({ id: decoded.id }).first();
+      // console.log("user data: ", req.user);
       next();
     } catch (err) {
       console.log(err);
@@ -46,7 +50,7 @@ async function login(req, res) {
       .first();
     if (!user) {
       console.log("User not found");
-      res.status(400).json("User not found");
+      return res.status(400).json("User not found");
     }
     console.log("user: ", user);
     if (user.password !== req.body.password) {

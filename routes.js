@@ -45,7 +45,7 @@ module.exports = function (app) {
   app.post("/member/:groupId", authenticate, addMembers);
   app.get("/member/:groupId", authenticate, getMembers);
   app.put("/member/:groupId", authenticate, updateScope);
-  app.delete("/member/:groupId", authenticate, deleteMember);
+  app.delete("/member/:groupId/:memberId", authenticate, deleteMember);
 
   // messages
   app.get("/messages/:groupId", authenticate, getMessages);

@@ -4,6 +4,7 @@ require("dotenv").config();
 const createCometuser = async (user) => {
   const url = process.env.COMETCHAT_URL + "users";
   // console.log("user commet : ", user);
+  console.log(url);
   const options = {
     method: "POST",
     headers: {
@@ -12,6 +13,9 @@ const createCometuser = async (user) => {
       apikey: process.env.API_KEY,
     },
     body: JSON.stringify({
+      metadata: {
+        "@private": { email: user.email, contactNumber: "0123456789" },
+      },
       uid: user.id,
       name: user.name,
     }),
